@@ -33,6 +33,17 @@ _SEARCH_HOMES_DATA_BASE = """{
     source {
         id
         listing_id
+        agents {
+            id
+            agent_id
+            agent_name
+            agent_phone
+            agent_email
+            office_id
+            office_name
+            office_phone
+            type
+        }
     }
     hoa {
         fee

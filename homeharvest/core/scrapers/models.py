@@ -178,3 +178,5 @@ class Property:
     estimated_value: int | None = None
 
     advertisers: Advertisers | None = None
+    sellers: str | None = None
+    buyers: str | None = None

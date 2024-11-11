@@ -59,6 +59,8 @@ ordered_properties = [
     "office_name",
     "office_email",
     "office_phones",
+    "sellers",
+    "buyers",
     "nearby_schools",
     "primary_photo",
     "alt_photos",
@@ -68,6 +70,7 @@ ordered_properties = [
 def process_result(result: Property) -> pd.DataFrame:
     prop_data = {prop: None for prop in ordered_properties}
     prop_data.update(result.__dict__)
+    print(prop_data)
 
     if "address" in prop_data:
         address_data = prop_data["address"]

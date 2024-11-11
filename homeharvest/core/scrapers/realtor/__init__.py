@@ -165,6 +165,14 @@ class RealtorScraper(Scraper):
 
     def process_property(self, result: dict, query_name: str) -> Property | None:
         mls = result["source"].get("id") if "source" in result and isinstance(result["source"], dict) else None
+        agents = result["source"].get("agents") if "source" in result and isinstance(result["source"], dict) else None
+        sellers, buyers = [], []
+        if agents:
+            for agent in agents:
+                if agent["type"] == "seller":
+                    sellers.append(agent)
+                elif agent["type"] == "buyer":
+                    buyers.append(agent)
 
         if not mls and self.mls_only:
             return
@@ -192,7 +200,7 @@ class RealtorScraper(Scraper):
 
         advertisers = self.process_advertisers(result.get("advertisers"))
 
-        realty_property = Property(
+        return Property(
             mls=mls,
             mls_id=(
                 result["source"].get("listing_id")
@@ -223,8 +231,9 @@ class RealtorScraper(Scraper):
             assessed_value=prop_details.get("assessed_value"),
             estimated_value=estimated_value if estimated_value else None,
             advertisers=advertisers,
+            sellers=str(sellers),
+            buyers=str(buyers),
         )
-        return realty_property
 
     def general_search(self, variables: dict, search_type: str) -> Dict[str, Union[int, list[Property]]]:
         """
